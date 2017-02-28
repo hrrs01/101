@@ -172,8 +172,12 @@ def createVar():
 			variables[commands[x]] *= int(commands[x+2],2)
 	
 def if_func(statement, commandList):
-	if returnVarValue(statement):
-		localCommandChecker(commandList)
+	if len(statement) == 2:
+		if statement_checker(commandList[0], statement, commandList[1]):
+			localCommandChecker(commandList, 2)
+	else:
+		if returnVarValue(statement):
+			localCommandChecker(commandList)
 	
 def createLocalVar(x, commands):
 	

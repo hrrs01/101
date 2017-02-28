@@ -34,6 +34,29 @@ for line in fileLines:
 
 x = 0
 
+def statement_checker(arg1, type, arg2):
+	
+	if type == "00":
+		if returnVarValue(arg1) == returnVarValue(arg2):
+			return True
+		else:
+			return False
+	elif type == "11":
+		if returnVarValue(arg1) == returnVarValue(arg2):
+			return False
+		else:
+			return True
+	elif type == "01":
+		if returnVarValue(arg1) < returnVarValue(arg2):
+			return True
+		else:
+			return False
+	elif type == "10":
+		if returnVarValue(arg1) > returnVarValue(arg2):
+			return True
+		else:
+			return False
+	
 def commandChecker():
 	global x
 	global commands
@@ -43,8 +66,8 @@ def commandChecker():
 	elif len(commands[x]) == 3 or len(commands[x]) == 4:
 		checkKeyWord()
 		
-def localCommandChecker(commands):
-	x = 0
+def localCommandChecker(commands, x=0):
+	
 	while x < len(commands):
 		if len(commands[x]) == 5:
 			x = createLocalVar(x, commands)
@@ -55,8 +78,13 @@ def localCommandChecker(commands):
 		x += 1
 		
 def returnVarValue(varName):
-	if len(varName) == 6:
+	if len(varName) >= 6:
 		return int(varName,2)
+	elif len(varName) == 1:
+		if varName == "1":
+			return True
+		else:
+			return False
 	return variables[varName]
 
 
@@ -128,7 +156,7 @@ def checkLocalKeyWord(x, commands):
 def createVar():
 	global x
 	global commands
-	if len(commands[x+1]) == 6:
+	if len(commands[x+1]) >= 6:
 			variables[commands[x]] = int(commands[x+1], 2)
 	elif commands[x+1] == "1":
 			variables[commands[x]] = True
@@ -148,7 +176,9 @@ def if_func(statement, commandList):
 		localCommandChecker(commandList)
 	
 def createLocalVar(x, commands):
-	if len(commands[x+1]) == 6:
+	
+	if len(commands[x+1]) >= 6:
+			print len(commands[x+1])
 			variables[commands[x]] = int(commands[x+1], 2)
 	elif commands[x+1] == "1":
 			variables[commands[x]] = True
@@ -168,8 +198,13 @@ def createLocalVar(x, commands):
 	
 def while_loop(statement, commandList):
 	
-	while returnVarValue(statement):
-		localCommandChecker(commandList)
+	
+	if len(statement) == 2:
+		while statement_checker(commandList[0], statement, commandList[1]):
+			localCommandChecker(commandList, 2)
+	else:
+		while returnVarValue(statement):
+			localCommandChecker(commandList)
 
 while x < len(commands):
 	commandChecker()

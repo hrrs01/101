@@ -1,0 +1,9 @@
+00001 101000 declares variable 00001 to 40
+00010 100010 declares variable 00010 to 34
+
+001 00010 # start of loop, checks if variable 00010 is over 0
+00010 0011 000010 # 0011 is the function for decrementing, and i decrement by 2 (decimal)
+1111 00001 # 1111 is the function for printing
+00001 0001 000010 # same as above, only addition
+1001 000101 # 1001 is timer, takes a whole number and divide by 10 to allow milliseconds
+111 # same as end symbol
